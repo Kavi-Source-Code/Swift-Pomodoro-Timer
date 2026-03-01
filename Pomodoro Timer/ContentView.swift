@@ -7,8 +7,10 @@
 
 import SwiftUI
 internal import Combine
+import AVFoundation
 
-/* This is a timer app.
+
+/* This is a pomodoro timer app.
  Features include buttons, shortcuts and even nice looks and stylish fonts!!
  */
 
@@ -21,17 +23,21 @@ enum TimerState {
 }
 
 
+func playSound() {
+    
+}
+
+
 struct ContentView: View {
     @State private var secs = 0
     @State private var mins = 0
     @State private var hrs = 0
     @State private var running = false
-    @State private var buttonText = "Start"
     @State private var collectingHours = false
     @State private var collectingMins = false
     @State private var collectingSecs = false
     @State private var timeStr = ""
-    @State private var state: TimerState!
+    @State private var timerState: TimerState!
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -69,14 +75,15 @@ struct ContentView: View {
                         }
                     }
                     
+                    if (hrs == 0 && mins == 0 && secs == 0) && running {
+                        // timer just finished; running should be false
+                        running = false
+                        //playSound()
+                    }
+                    
                 }
-            Button(buttonText) {
+            Button(running ? "Stop" : "Start") {
                 running = !running
-                if running {
-                    buttonText = "Stop"
-                } else {
-                    buttonText = "Start"
-                }
             }
             .font(Font.custom("monogram", size: 40))
             .foregroundColor(Color(red: 0.012, green: 0.412, blue: 0.614))
@@ -145,6 +152,7 @@ struct ContentView: View {
         .padding(25)
         .border(rectColor, width: 8)
         .cornerRadius(20)
+    
     }
 }
 
