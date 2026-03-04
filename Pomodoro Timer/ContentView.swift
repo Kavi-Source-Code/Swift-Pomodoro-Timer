@@ -47,16 +47,29 @@ struct ContentView: View {
 
     var body: some View {
         let combinedHrsMinsSecs = String(format: "%02d:%02d:%02d", hrs, mins, secs)
-        
+            
         Image(systemName: "timer")
             .font(.system(size: 40))
             .padding(30)
-        
         Text("Pomodoro Timer")
             .foregroundColor(rectColor)
             .font(.system(size: 80))
             .padding(.bottom, 40)
         Text("If you have any suggestions/improvements, or a review, please do take some time... Also, you can [star this repo](https://github.com/Kavi-Source-Code/Swift-Pomodoro-Timer) and [leave a review](https://github.com/Kavi-Source-Code/Swift-Pomodoro-Timer/releases/tag/v1.0.0) if you find it useful. I am almost 9 and I like to code. This is a really big milestone for me!")
+        VStack {
+            Image(systemName: "arrowshape.up.fill")
+                .font(.system(size: 32))
+                .rotationEffect(Angle(degrees: Double(secs * 6)))
+                .foregroundStyle(.yellow.opacity(0.5))
+            Image(systemName: "arrowshape.up.fill")
+                .font(.system(size: 32))
+                .rotationEffect(Angle(degrees: Double(mins * 6)))
+                .foregroundStyle(.red.opacity(0.5))
+            Image(systemName: "arrowshape.up.fill")
+                .font(.system(size: 32))
+                .rotationEffect(Angle(degrees: Double(hrs * 6)))
+                .foregroundStyle(.mint.opacity(0.5))
+        }
         
         VStack {
             
@@ -158,11 +171,5 @@ struct ContentView: View {
         .border(rectColor, width: 8)
         .cornerRadius(20)
     
-    }
-}
-
-struct Prieviews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
